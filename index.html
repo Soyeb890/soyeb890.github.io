@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO -->
+  <title>Raqeeb Garments Workshop — Custom Uniforms & Branded Apparel (UAE)</title>
+  <meta name="description" content="Custom uniforms & branded apparel made in the UAE — from 10 to 100,000 pieces. Fast turnaround, in-house embroidery, flexible order sizes. Restaurants, hotels, corporates, and growing brands." />
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+  <meta property="og:image" content="images/og-image-1200x630.png" />
+
+  <!-- System fonts only (faster) -->
+  <style>
+    :root { --brand:#0a192b; --ink:#111827; --muted:#6b7280; --soft:#f5f7fa; --accent:#10b981; --blue:#0ea5e9 }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+    .container{max-width:1160px;margin:0 auto;padding:0 16px}
+
+    /* Topbar */
+    .topbar{background:#0f244a;color:#cfe3ff;font-size:13px}
+    .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0}
+    .topbar .links{display:flex;gap:14px;flex-wrap:wrap}
+    .topbar a{color:#cfe3ff} .topbar a:hover{text-decoration:underline}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:70;backdrop-filter:saturate(140%) blur(8px)}
+    .navshell{background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.88));border-bottom:1px solid #e5e7eb}
+    .nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{width:40px;height:40px;border-radius:10px}
+    .brand h1{font-size:18px;font-weight:800;color:var(--brand)}
+    .menulinks{display:flex;align-items:center;gap:18px}
+    .menulinks a{position:relative;padding:6px 2px}
+    .menulinks a:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:linear-gradient(90deg,transparent,var(--brand),transparent);transform:scaleX(0);transform-origin:center;transition:transform .25s}
+    .menulinks a:hover:after{transform:scaleX(1)}
+    .cta{background:var(--accent);color:#fff;padding:10px 14px;border-radius:12px;font-weight:800}
+    .hamb{display:none;background:#eef2f7;border:1px solid #e5e7eb;padding:8px 10px;border-radius:10px}
+
+    .drawer{display:none;border-bottom:1px solid #e5e7eb;background:#fff}
+    .drawer .links{display:grid;gap:10px;padding:12px 0}
+    .drawer .links a{padding:8px 0}
+
+    /* Hero */
+    .hero{background:linear-gradient(180deg,#0a192b,#1f2a44);color:#fff}
+    .hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:26px;align-items:center;padding:56px 0}
+    .hero h2{font-size:36px;line-height:1.15;margin-bottom:14px}
+    .hero p{color:#e5e7eb;margin-bottom:18px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap}
+    .badge{background:#0f244a;border:1px solid #223153;color:#cfe3ff;padding:8px 12px;border-radius:999px;font-size:12px}
+    .herocta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .cards{display:grid;gap:12px}
+    .icards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .icard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:14px}
+    .icard h4{font-size:15px;color:#e2e8f0;margin-bottom:6px}
+    .icard p,.icard li{color:#d1d5db;font-size:14px}
+    .icard ul{padding-left:16px}
+
+    section{padding:56px 0}
+    .title{font-size:24px;color:var(--brand);margin-bottom:8px}
+    .subtitle{color:var(--muted);margin-bottom:18px}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .tile{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fff}
+    .tile .thumb{aspect-ratio:4/3;background:#f3f4f6;display:flex;align-items:center;justify-content:center;padding:4px}
+    .tile h3{font-size:16px;padding:10px 12px 2px}
+    .tile p{font-size:14px;color:var(--muted);padding:0 12px 12px}
+
+    /* Process */
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+    .step{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+    .step h4{color:var(--brand);margin-bottom:6px}
+
+    /* FAQ */
+    .faq{display:grid;gap:10px}
+    .q{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+    .q summary{cursor:pointer;font-weight:700;color:#0a192b}
+    .q p{color:#4b5563;margin-top:8px}
+
+    /* Contact */
+    .contactgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px}
+    .formgrid{display:grid;gap:10px}
+    .input,.textarea{width:100%;padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}
+    .btnrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .btn{background:#0b1223;color:#fff;padding:10px 16px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+    .btnw{background:#10b981;color:#fff;padding:10px 16px;border-radius:10px;display:inline-flex;align-items:center;gap:8px;font-weight:800}
+    .map{border:0;width:100%;height:300px;border-radius:12px;pointer-events:none}
+    .map.is-active{pointer-events:auto}
+
+    /* Footer */
+    footer{background:#0b1223;color:#cfd7e3;margin-top:24px}
+    .footwrap{padding:36px 0}
+    .footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}
+    .foot .brand{gap:12px}
+    .foot p{color:#a9b3c4}
+    .foot h4{font-size:14px;color:#e2e8f0;margin-bottom:10px;letter-spacing:.3px}
+    .foot ul{list-style:none;display:grid;gap:8px}
+    .copy{border-top:1px solid #1f2937;margin-top:22px;padding:12px 0;font-size:13px;color:#9aa3af;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero .wrap{grid-template-columns:1fr}
+      .icards{grid-template-columns:1fr}
+      .contactgrid{grid-template-columns:1fr}
+      .footgrid{grid-template-columns:1fr}
+      .menulinks{display:none}
+      .hamb{display:inline-flex}
+      .brand h1{font-size:16px}
+    }
+  </style>
+
+  <!-- LocalBusiness JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Raqeeb Garments Workshop",
+    "image": "https://www.raqeebgmt.com/images/og-image-1200x630.png",
+    "address": { "@type": "PostalAddress", "streetAddress": "Industrial Area 2", "addressLocality": "Ajman", "addressCountry": "AE" },
+    "telephone": "+971562424693",
+    "email": "info@raqeebgmt.com",
+    "geo": { "@type": "GeoCoordinates", "latitude": 25.3811889, "longitude": 55.474133 },
+    "url": "https://www.raqeebgmt.com",
+    "sameAs": [
+      "https://instagram.com/raqeebgarments",
+      "https://www.tiktok.com/@raqeeb.garments",
+      "https://wa.me/971562424693"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container wrap">
+      <div class="links"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="navshell">
+      <div class="container nav">
+        <div class="brand">
+          <img src="images/icon-64.png" alt="Raqeeb logo">
+          <h1>Raqeeb Garments Workshop</h1>
+        </div>
+        <nav class="menulinks">
+          <a href="#products">Products</a>
+          <a href="#process">Process</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button class="hamb" aria-label="Menu"
+                onclick="document.getElementById('drawer').hidden = !document.getElementById('drawer').hidden">☰</button>
+      </div>
+      <div id="drawer" class="drawer" hidden>
+        <div class="container">
+          <div class="links">
+            <a href="#products" onclick="document.getElementById('drawer').hidden=true">Products</a>
+            <a href="#process"  onclick="document.getElementById('drawer').hidden=true">Process</a>
+            <a href="#faq"      onclick="document.getElementById('drawer').hidden=true">FAQ</a>
+            <a href="#contact"  onclick="document.getElementById('drawer').hidden=true">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container wrap">
+      <div>
+        <h2>Custom Uniforms & Branded Apparel — From 10 to 100,000, Made in the UAE</h2>
+        <p>Trusted by hospitality, healthcare, industrial & transport companies, as well as growing brands in the UAE and worldwide. From 10 to 100,000 uniforms, delivered in 5-14 days with in-house printning, embroidery and international shipping.</p>
+        <div class="badges">
+          <span class="badge">Low MOQ from 10 pcs</span>
+          <span class="badge">In-house printnig and embroidery</span>
+          <span class="badge">Measurement & fitting</span>
+          <span class="badge">World-wide delivery</span>
+        </div>
+        <div class="herocta">
+          <!-- Social CTAs -->
+          <a class="cta" style="background:#E1306C"
+             href="https://instagram.com/raqeebgarments" target="_blank" rel="noopener">
+            📸 Instagram
+          </a>
+          <a class="cta" style="background:#000"
+             href="https://www.tiktok.com/@raqeeb.garments" target="_blank" rel="noopener">
+            🎵 TikTok
+          </a>
+          <a class="cta" style="background:var(--blue)" href="tel:+971562424693">📞 Call Us Now</a>
+          <a class="cta" style="background:#0b1223"
+             href="mailto:info@raqeebgmt.com?subject=Uniform%20Inquiry&body=Company%20Name%3A%0AIndustry%3A%0AItems%3A%0AQuantity%3A%0ASizes%3A%0ALogo%20File%3A%20%28attach%20AI%2FPDF%2FPNG%29%0ATimeline%3A">
+            ✉️ Email Us
+          </a>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="icards">
+          <div class="icard">
+            <h4>Industries:</h4>
+            <p>Hospitality · Healthcare · Education · Security · Aviation · Industrial & Construction · Transport</p>
+          </div>
+          <div class="icard">
+            <h4>Popular items:</h4>
+            <p>Polos & T-shirts · Hoodies & Jackets · Pants & Coveralls · Chef coats & Aprons · Scrubs & Lab coats · Corporate Suits & Safety wear · Caps & Hats · Abayas & Kandoras</p>
+          </div>
+          <div class="icard">
+            <h4>Why choose us:</h4>
+            <p>
+• In-house QC
+• Fabric choice: 50+ options
+• Sampling: 24h mock-ups, rapid prototyping</p>
+          </div>
+          <div class="icard">
+            <h4>Delivery:</h4>
+            <p>Ajman-based workshop with UAE-wide shipping or pickup, plus international shipping for global clients.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products">
+    <div class="container">
+      <h3 class="title">Products</h3>
+      <p class="subtitle">Our Popular items</p>
+      <div class="grid">
+        <article class="tile"><div class="thumb"><img src="images/polo.png" alt="Polo Shirts" loading="lazy" width="600" height="450"></div><h3>Polo Shirts</h3><p>Best seller | Embroidery/print | MOQ 10</p></article>
+        <article class="tile"><div class="thumb"><img src="images/scrubs.png" alt="Medical Scrubs" loading="lazy" width="600" height="450"></div><h3>Medical Scrubs</h3><p> Poly-cotton or stretch blends | Unisex sizes</p></article>
+        <article class="tile"><div class="thumb"><img src="images/coverall.png" alt="Coveralls" loading="lazy" width="600" height="450"></div><h3>Coveralls</h3><p> Reflective options | Name tags</p></article>
+        <article class="tile"><div class="thumb"><img src="images/labcoat.png" alt="Lab Coats" loading="lazy" width="600" height="450"></div><h3>Lab Coats</h3><p>Choice of snap or button closure | Embroidery options</p></article>
+        <article class="tile"><div class="thumb"><img src="images/hotel-frontdesk.png" alt="Hotel Uniforms" loading="lazy" width="600" height="450"></div><h3>Hotel Uniforms</h3><p>Front desk & service wear · Embroidery options | Fabric swatches available</p></article>
+        <article class="tile"><div class="thumb"><img src="images/chef-coat.png" alt="Chef Coats" loading="lazy" width="600" height="450"></div><h3>Chef Coats</h3><p>Double-breasted | Knot buttons | Sleeve pocket | Embroidery</p></article>
+        <article class="tile"><div class="thumb"><img src="images/housekeeping.png" alt="Housekeeping Uniforms" loading="lazy" width="600" height="450"></div><h3>Housekeeping Uniforms</h3><p>Modest dress & apron sets | Easy-care fabrics | Bulk sizing</p></article>
+        <article class="tile"><div class="thumb"><img src="images/school-uniform.png" alt="School Uniforms" loading="lazy" width="600" height="450"></div><h3>School Uniforms</h3><p>Shirts · Skirts · Trousers · Sweaters · PE kits | Bulk pricing</p></article>
+        <article class="tile"><div class="thumb"><img src="images/aviation-pilot.png" alt="Aviation Uniforms" loading="lazy" width="600" height="450"></div><h3>Aviation Uniforms</h3><p>Pilot & cabin crew · Embroidery options</p></article>
+        <article class="tile"><div class="thumb"><img src="images/security-uniform.png" alt="Security Uniforms" loading="lazy" width="600" height="450"></div><h3>Security Uniforms</h3><p>Patrol & facility wear · Hi-vis · Embroidery</p></article>
+        <article class="tile"><div class="thumb"><img src="images/varsity.png" alt="Senior Varsity Jackets" loading="lazy" width="600" height="450"></div><h3>Senior Jackets</h3><p>Custom colors · Embroidery & patch options</p></article>
+        <article class="tile"><div class="thumb"><img src="images/heritage-kandoora-abaya.png" alt="Kandoora & Abaya" loading="lazy" width="600" height="450"></div><h3>Kandoora & Abaya</h3><p>Tailored fit · Fabric & embroidery</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process">
+    <div class="container">
+      <h3 class="title">Process</h3>
+      <p class="subtitle">Simple steps from enquiry to delivery.</p>
+      <div class="steps">
+        <div class="step"><h4>1) Enquiry</h4><p>Send items, qty, colors, sizes, logos. We reply with quote and timeline.</p></div>
+        <div class="step"><h4>2) Sampling</h4><p>Color swatches / size set / sample piece as needed for approval.</p></div>
+        <div class="step"><h4>3) Production</h4><p>Cutting, stitching, finishing, embroidery/print. Tight QC, consistent sizing.</p></div>
+        <div class="step"><h4>4) Delivery</h4><p>UAE-wide shipping or pickup, plus international shipping. Typical lead time 5–14 days.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <h3 class="title">FAQ</h3>
+      <p class="subtitle">Answers to common questions.</p>
+      <div class="faq">
+        <details class="q"><summary>What’s your minimum order?</summary><p>MOQ starts at 10 pcs per design/color.</p></details>
+        <details class="q"><summary>Can you do embroidery and printing?</summary><p>Yes. In-house embroidery; DTF/print on request.</p></details>
+        <details class="q"><summary>How long is production?</summary><p>Usually 5–14 days depending on item and quantity.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h3 class="title">Contact</h3>
+      <p class="subtitle">Industrial Area 2, Ajman, UAE</p>
+      <div class="contactgrid">
+        <div class="card">
+          <!-- FormSubmit-enabled form -->
+          <form id="contactForm" class="formgrid" action="https://formsubmit.co/info@raqeebgmt.com" method="POST">
+            <input type="hidden" name="_subject" value="New enquiry from raqeebgmt.com" />
+            <input type="hidden" name="_next" value="https://www.raqeebgmt.com/thanks.html" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <label for="name">Name</label>
+            <input id="name" class="input" type="text" name="name" placeholder="Your name" required>
+
+            <label for="email">Email</label>
+            <input id="email" class="input" type="email" name="email" placeholder="you@example.com" required>
+
+            <label for="msg">Message</label>
+            <textarea id="msg" class="textarea" name="message" rows="6" placeholder="Items, qty, sizes, logo details..." required></textarea>
+
+            <div class="btnrow">
+              <button type="submit" class="btn">Send</button>
+              <a class="btnw" style="background:#0ea5e9" href="tel:+971562424693">📞 Call</a>
+              <a class="btnw" style="background:#0b1223"
+                 href="mailto:info@raqeebgmt.com?subject=Uniform%20Inquiry&body=Company%20Name%3A%0AIndustry%3A%0AItems%3A%0AQuantity%3A%0ASizes%3A%0ALogo%20File%3A%20%28attach%20AI%2FPDF%2FPNG%29%0ATimeline%3A">✉️ Email</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Clean map embed (no info bubble) + external link -->
+        <div class="card">
+          <iframe
+            title="Raqeeb Garments Workshop — Map"
+            src="https://www.google.com/maps?q=loc:25.3811889,55.474133&z=18&hl=en&output=embed"
+            class="map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            style="filter:grayscale(0.12) contrast(1.04);">
+          </iframe>
+          <div class="btnrow" style="margin-top:10px">
+            <a class="btnw" style="background:#0ea5e9"
+               href="https://www.google.com/maps/dir/?api=1&destination=25.3811889,55.474133"
+               target="_blank" rel="noopener">
+              📍 Open in Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="foot">
+    <div class="container footwrap">
+      <div class="footgrid">
+        <div>
+          <div class="brand">
+            <img src="images/icon-64.png" alt="Raqeeb logo">
+            <h1 style="color:#e2e8f0">Raqeeb Garments Workshop</h1>
+          </div>
+          <p style="margin-top:8px">Bulk uniforms & custom apparel. Ajman-based workshop serving the UAE and beyond.</p>
+        </div>
+        <div>
+          <h4>Links</h4>
+          <ul>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+971508575847">+971 50 857 5847</a></li>
+            <li><a href="tel:+971562424693">+971 56 242 4693</a></li>
+            <li><a href="mailto:info@raqeebgmt.com">info@raqeebgmt.com</a></li>
+            <li>Industrial Area 2, Ajman</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copy">
+        <div>© <span id="y"></span> Raqeeb Garments Workshop. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky FAB: WhatsApp -->
+  <a href="https://wa.me/971562424693?text=Hi%20Raqeeb%2C%20I%20need%20a%20uniform%20quote."
+     aria-label="WhatsApp (opens WhatsApp)"
+     target="_blank" rel="noopener"
+     style="position:fixed;right:14px;bottom:14px;z-index:9999;background:#25D366;border-radius:999px;padding:14px 16px;color:#fff;font-weight:800;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.18);">
+    💬 WhatsApp
+  </a>
+
+  <script>
+    // Footer year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // FormSubmit: let the browser submit the form normally (no JS needed)
+    // (You can remove this listener entirely; keeping it empty is fine too.)
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      // intentionally left blank
+    });
+
+    // Enable map interaction on first tap/click so it doesn't hijack scroll
+    (function(){
+      const map = document.querySelector('iframe.map');
+      if (!map) return;
+      map.parentElement.addEventListener('click', () => map.classList.add('is-active'), { once: true });
+    })();
+  </script>
+</body>
+</html>
