@@ -1,0 +1,810 @@
+/* Raqeeb Garments Workshop — V2 homepage stylesheet
+   Mobile-first. Base rules target small screens; breakpoints add layout at 560/640/900/1100. */
+
+:root{
+  --ink:#0a1220;
+  --ink-2:#101b2e;
+  --ink-3:#182842;
+  --line-dark:#26364f;
+  --line-dark-soft:#1c2c44;
+  --muted-inv:#a9b4c4;
+
+  --paper:#ffffff;
+  --soft:#f4f5f7;
+  --soft-2:#eceef1;
+  --line:#e1e4e9;
+
+  --text:#12161c;
+  --muted:#5a6472;
+
+  --accent:#b5531d;
+  --accent-2:#8f4116;
+  --accent-soft:#f6e6da;
+  --accent-tint:#e8a374;
+
+  --wa:#1e8449; /* darkened slightly from #1f8a4c: white text on the original was ~4.38:1, just under WCAG AA's 4.5:1 for normal-weight button text; this reaches ~4.7:1 with no visible brand shift */
+
+  --radius:4px;
+  --radius-sm:3px;
+  --maxw:1320px;
+  --maxw-narrow:820px;
+  --maxw-product:1000px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --dur-reveal:.85s;
+  --dur-stagger:.68s;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+html{
+  scroll-behavior:smooth;
+  /* Keyboard-focused elements (not just #anchor jump targets, which use
+     scroll-margin-top on the sections themselves below) should still clear
+     the sticky header on the way in, and the fixed WhatsApp FAB on the way
+     out at the bottom of the page. */
+  scroll-padding-top:90px;
+  scroll-padding-bottom:80px;
+}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+  color:var(--text);
+  background:var(--paper);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;height:auto;display:block}
+/* Explicit opt-in for the two image treatments this site needs:
+   .media-contain — isolated garment renders (current default everywhere;
+   these have their own neutral background, so cropping them loses part of
+   the product). .media-cover — real environmental photography, if/when it's
+   added, where filling the frame is more appropriate than letterboxing. */
+.media-contain{object-fit:contain}
+.media-cover{object-fit:cover}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font:inherit;cursor:pointer;background:none;border:0}
+input,textarea{font:inherit}
+svg{display:block}
+
+.container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.container-narrow{max-width:var(--maxw-narrow);margin:0 auto;padding:0 22px}
+/* Product-detail rail — wider than .container-narrow (homepage editorial
+   copy) so a spec sheet reads as substantial commercial content rather than
+   a text column floating in unused space on large desktops. */
+.container-product{max-width:var(--maxw-product);margin:0 auto;padding:0 22px}
+
+section[id]{scroll-margin-top:100px}
+
+/* ---------- Typography ---------- */
+h1,h2,h3,h4{font-weight:800;letter-spacing:-.01em;color:var(--ink);line-height:1.12}
+h1{font-size:clamp(2.1rem,1.5rem + 3vw,4rem)}
+h2{font-size:clamp(1.6rem,1.35rem + 1.4vw,2.5rem)}
+h3{font-size:1.2rem;font-weight:700}
+p{color:var(--muted)}
+strong{color:var(--text);font-weight:700}
+
+.eyebrow{
+  display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+}
+.eyebrow.inv{color:var(--accent-tint)}
+
+.kicker{color:var(--muted);max-width:58ch;font-size:1.02rem}
+.kicker.on-dark{color:var(--muted-inv)}
+
+.section-head{margin-bottom:40px}
+.section-head h2{margin-bottom:12px}
+/* When a section-head is the only/last thing in its container (product-page
+   Overview sections, once nothing follows the intro copy), the bottom
+   margin has nothing to separate from and just adds dead vertical space. */
+.section-head:last-child{margin-bottom:0}
+
+@media (min-width:900px){ .section-head{margin-bottom:56px} }
+
+/* ---------- Buttons (two tiers) ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 28px;border-radius:var(--radius);font-weight:700;font-size:.95rem;
+  border:1px solid transparent;
+  transition:background .22s var(--ease-out),border-color .22s var(--ease-out),
+             color .22s var(--ease-out),transform .18s var(--ease-out),box-shadow .22s var(--ease-out);
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:var(--ink-2);transform:translateY(-1px);box-shadow:0 10px 24px rgba(10,18,32,.18)}
+.btn-secondary{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-secondary:hover{border-color:var(--ink);transform:translateY(-1px)}
+.btn-on-dark{border-color:var(--line-dark);color:#fff}
+.btn-on-dark:hover{border-color:#fff;background:rgba(255,255,255,.06);transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent-2);transform:translateY(-1px);box-shadow:0 12px 28px rgba(181,83,29,.32)}
+.btn-whatsapp{background:var(--wa);color:#fff}
+.btn-whatsapp:hover{background:#186e3d;transform:translateY(-1px);box-shadow:0 10px 22px rgba(31,138,76,.28)}
+.btn-block{width:100%}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{
+  outline:3px solid var(--accent);outline-offset:2px;
+}
+
+/* ---------- Skip link ---------- */
+.skip-link{
+  position:absolute;left:8px;top:-60px;background:var(--ink);color:#fff;
+  padding:12px 16px;border-radius:var(--radius-sm);z-index:300;transition:top .15s;
+}
+.skip-link:focus{top:8px}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:100}
+.navshell{
+  background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid var(--line);transition:box-shadow .3s var(--ease-out);
+}
+header.scrolled .navshell{box-shadow:0 8px 28px rgba(10,18,32,.09)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:height .3s var(--ease-out)}
+header.scrolled .nav{height:64px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:38px;height:38px;transition:width .3s var(--ease-out),height .3s var(--ease-out)}
+header.scrolled .brand img{width:32px;height:32px}
+.brandname{font-weight:800;font-size:1rem;color:var(--ink);letter-spacing:-.01em}
+.menulinks{display:none}
+.navsocial{display:none}
+.navcta{display:none}
+.hamb{
+  display:flex;align-items:center;justify-content:center;width:44px;height:44px;
+  background:var(--soft);border:1px solid var(--line);border-radius:var(--radius-sm);
+  transition:background .18s var(--ease-out),border-color .18s var(--ease-out);
+}
+.hamb:hover{background:var(--soft-2);border-color:var(--ink)}
+.hamb span{display:block;width:18px;height:2px;background:var(--ink);position:relative;transition:background .2s}
+.hamb span::before,.hamb span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink);transition:transform .25s var(--ease-out),top .25s var(--ease-out)}
+.hamb span::before{top:-6px}
+.hamb span::after{top:6px}
+.hamb[aria-expanded="true"] span{background:transparent}
+.hamb[aria-expanded="true"] span::before{top:0;transform:rotate(45deg)}
+.hamb[aria-expanded="true"] span::after{top:0;transform:rotate(-45deg)}
+
+.drawer{
+  border-bottom:1px solid var(--line);background:#fff;overflow:hidden;
+  max-height:0;opacity:0;transition:max-height .35s var(--ease-out),opacity .28s var(--ease-out);
+}
+.drawer.open{max-height:85vh;overflow-y:auto;opacity:1}
+.drawer .links{display:grid;gap:2px;padding:14px 0}
+.drawer .links a{padding:12px 4px;font-weight:600;border-bottom:1px solid var(--soft-2);transition:padding-left .18s var(--ease-out),color .18s var(--ease-out)}
+.drawer .links a:hover{padding-left:8px;color:var(--accent)}
+.drawer-actions{display:grid;gap:10px;padding:16px 0}
+.drawer-social{display:flex;gap:22px;padding:16px 4px 4px;border-top:1px solid var(--soft-2)}
+.drawer-social a{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.88rem;color:var(--muted);transition:color .18s var(--ease-out)}
+.drawer-social a:hover{color:var(--accent)}
+
+/* Full desktop nav (brand + 6 links + socials + CTA) needs real room to
+   avoid crowding — the hamburger pattern now covers phone AND tablet/compact
+   widths, and only hands off once there's genuinely enough space. */
+@media (min-width:1100px){
+  .menulinks{display:flex;align-items:center;gap:30px}
+  .menulinks a{position:relative;padding:8px 2px;font-weight:600;font-size:.94rem;color:var(--text);transition:color .2s var(--ease-out)}
+  .menulinks a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .3s var(--ease-out)}
+  .menulinks a:hover{color:var(--ink)}
+  .menulinks a:hover::after{transform:scaleX(1);transform-origin:left}
+  .menulinks a.active{color:var(--ink)}
+  .menulinks a.active::after{transform:scaleX(1)}
+  .navsocial{display:flex;align-items:center;gap:14px;margin-left:6px;padding-left:20px;border-left:1px solid var(--line)}
+  .navsocial a{display:flex;color:var(--muted);transition:color .2s var(--ease-out)}
+  .navsocial a:hover{color:var(--accent)}
+  .navcta{display:inline-flex}
+  .hamb{display:none}
+  .drawer{display:none!important}
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  /* Vertical spacing lives entirely in .hero-inner — without this, the
+     generic `section` rule below adds its own top/bottom padding on top of
+     hero-inner's, compounding into a near-fullscreen splash on every hero
+     (homepage, hub, and all product pages). */
+  padding:0;
+  background:
+    linear-gradient(180deg,rgba(10,18,32,.92),rgba(10,18,32,.97)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 96px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 96px),
+    var(--ink);
+  color:#fff;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;right:-10%;top:-25%;width:60%;height:150%;
+  background:radial-gradient(circle,rgba(181,83,29,.18),transparent 60%);pointer-events:none;
+}
+.hero-inner{padding-top:40px;padding-bottom:36px;position:relative;z-index:1}
+.hero-copy{max-width:44rem}
+.hero h1{color:#fff;margin-bottom:24px}
+/* Homepage H1 and product-page H1s carry different typical lengths, so they
+   get independent width control instead of one shared ch value: homepage's
+   hero-copy is a direct child of .hero-inner, product pages nest theirs
+   inside .product-hero-grid/.product-hero-solo, which makes them easy to
+   target separately with no HTML changes needed. */
+.hero-inner > .hero-copy h1{max-width:19ch}
+.product-hero-grid h1,.product-hero-solo h1{max-width:23ch}
+.hero .lead{color:var(--muted-inv);font-size:1.1rem;max-width:52ch;margin-bottom:34px}
+.herocta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:0}
+.phonelink{color:var(--muted-inv);font-size:.92rem;font-weight:600;transition:color .2s var(--ease-out)}
+.phonelink:hover{color:#fff}
+
+/* Decorative technical graphic — fills the hero's right-side negative space
+   without photography. Hidden below 900px: there's no room for it and the
+   copy column already runs full width. */
+.hero-graphic{display:none}
+@media (min-width:900px){
+  .hero-graphic{
+    display:block;position:absolute;top:50%;right:-4%;width:44%;max-width:560px;
+    transform:translateY(-50%);z-index:0;pointer-events:none;
+  }
+  .hero-graphic-spin{transform-origin:200px 200px;animation:heroSpin 90s linear infinite}
+  .hero-graphic-draw{stroke-dasharray:6 5;stroke-dashoffset:640;animation:heroDraw 2.2s var(--ease-out) .5s forwards}
+}
+@keyframes heroSpin{to{transform:rotate(360deg)}}
+@keyframes heroDraw{to{stroke-dashoffset:0}}
+
+/* Mobile: a compact 2x2 spec-sheet grid — every cell gets its own
+   right+bottom border, the container supplies the top+left edge, so the
+   lines form a single grid outline instead of doubling up. Desktop
+   (560px+) collapses back to the original restrained single-line row. */
+.hero-proof{
+  display:grid;grid-template-columns:1fr 1fr;margin-top:32px;
+  border-top:1px solid var(--line-dark-soft);border-left:1px solid var(--line-dark-soft);
+}
+.hero-proof-item{
+  padding:14px 16px;font-size:.76rem;color:var(--muted-inv);line-height:1.4;
+  border-right:1px solid var(--line-dark-soft);border-bottom:1px solid var(--line-dark-soft);
+}
+.hero-proof-item strong{display:block;color:#fff;font-weight:700;font-size:.94rem;margin-bottom:3px;letter-spacing:-.005em}
+
+/* Desktop only: a fixed four-column row instead of a wrapping flex row.
+   Flex-wrap let column widths follow content length, which could drop the
+   fourth item onto its own line depending on text/viewport width — a grid
+   with a fixed column count can't do that, and it also gives all four
+   items equal visual weight instead of width-per-content. The 2x2 grid
+   above is kept all the way through tablet widths rather than switching to
+   a wrapping row early, so there's no intermediate width where wrapping
+   could reappear. */
+@media (min-width:900px){
+  .hero-inner{padding-top:64px;padding-bottom:48px}
+  .hero-proof{
+    grid-template-columns:repeat(4,1fr);margin-top:32px;padding-top:20px;
+    border-left:0;border-top:1px solid var(--line-dark-soft);
+  }
+  .hero-proof-item{padding:0 24px;border-top:0;border-right:0;border-bottom:0;border-left:1px solid var(--line-dark-soft)}
+  .hero-proof-item:first-child{padding-left:0;border-left:0}
+  .hero-proof-item strong{display:inline;margin-bottom:0;font-size:inherit}
+}
+
+/* ---------- Statement band ---------- */
+.statement{padding:64px 0;background:var(--paper)}
+@media (min-width:900px){ .statement{padding:96px 0} }
+.statement .container-narrow{text-align:left}
+.statement blockquote{
+  font-size:clamp(1.6rem,1.25rem + 1.8vw,2.6rem);font-weight:800;color:var(--ink);
+  line-height:1.22;letter-spacing:-.01em;margin-bottom:22px;
+}
+.statement .support{font-size:1.06rem;max-width:58ch}
+
+/* ---------- Section base ---------- */
+section{padding:56px 0}
+.section-dark{background:var(--ink);color:#fff}
+.section-dark h2{color:#fff}
+.section-dark .section-head p{color:var(--muted-inv)}
+.section-soft{background:var(--soft)}
+
+@media (min-width:900px){ section{padding:88px 0} }
+
+/* Denser rhythm for information-dense, repeated sections (product-page
+   specification/enquiry/related blocks) so a page with several of these in
+   a row doesn't force the visitor through large blank gaps between useful
+   content. Major narrative sections keep the standard `section` spacing. */
+.section-tight{padding:40px 0}
+@media (min-width:900px){ .section-tight{padding:64px 0} }
+
+/* ---------- Two paths ---------- */
+.twopath-grid{display:grid;gap:22px}
+.pathcard{
+  display:flex;flex-direction:column;
+  border:1px solid var(--line);border-top:3px solid var(--line);border-radius:var(--radius);
+  padding:32px;background:#fff;
+  transition:box-shadow .3s var(--ease-out),transform .3s var(--ease-out),border-color .3s var(--ease-out);
+}
+.pathcard:hover{box-shadow:0 20px 44px rgba(10,18,32,.08);transform:translateY(-3px)}
+.pathcard .path-index{font-size:.78rem;font-weight:800;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:16px;display:block}
+.pathcard h3{font-size:1.4rem;margin-bottom:12px}
+.pathcard > p{margin-bottom:22px}
+.pathcard ul{margin-bottom:28px;display:grid;gap:11px}
+.pathcard li{padding-left:22px;position:relative;font-size:.95rem;color:var(--text)}
+.pathcard li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:2px;background:var(--accent)}
+.pathcard .btn{margin-top:auto;align-self:flex-start}
+.pathcard.corporate{background:var(--ink);color:#fff;border-color:var(--ink);border-top-color:var(--accent)}
+.pathcard.corporate:hover{box-shadow:0 20px 48px rgba(10,18,32,.35)}
+.pathcard.corporate h3,.pathcard.corporate .path-index{color:#fff}
+.pathcard.corporate > p{color:var(--muted-inv)}
+.pathcard.corporate li{color:#fff}
+.pathcard.corporate li::before{background:var(--accent-tint)}
+
+@media (min-width:900px){
+  .twopath-grid{grid-template-columns:1fr 1.15fr}
+  .pathcard{padding:46px}
+}
+
+/* ---------- Product grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.tile{
+  display:block;position:relative;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff;
+  transition:box-shadow .35s var(--ease-out),transform .35s var(--ease-out),border-color .35s var(--ease-out);
+}
+.tile:hover{border-color:transparent;box-shadow:0 22px 48px rgba(10,18,32,.12);transform:translateY(-5px)}
+.tile .thumb{aspect-ratio:4/3;overflow:hidden;background:var(--soft);position:relative}
+.tile .thumb img{width:100%;height:100%;object-fit:contain;transition:transform .6s var(--ease-out)}
+.tile:hover .thumb img{transform:scale(1.05)}
+.tile .index{
+  position:absolute;top:10px;left:10px;z-index:1;font-size:.68rem;font-weight:800;letter-spacing:.05em;
+  color:#fff;background:rgba(10,18,32,.55);backdrop-filter:blur(4px);
+  padding:4px 8px;border-radius:2px;
+}
+.tile .body{padding:16px 18px 20px}
+.tile h3{font-size:.98rem;margin-bottom:5px;letter-spacing:-.005em;color:var(--ink)}
+.tile p{font-size:.82rem;color:var(--muted)}
+
+.section-cta{margin-top:36px;display:flex}
+
+@media (min-width:640px){ .grid{grid-template-columns:repeat(3,1fr);gap:20px} }
+@media (min-width:1100px){ .grid{grid-template-columns:repeat(4,1fr)} }
+
+/* ---------- Featured product grid (homepage) ---------- */
+/* Editorial composition: one dominant tile, one wide tile, regular tiles,
+   and a closing CTA band — not an equal-card catalogue wall. */
+.feat-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.feat-grid .tile.t-large .thumb{aspect-ratio:16/11}
+.feat-grid .tile.t-large h3{font-size:1.3rem}
+
+@media (min-width:560px){
+  .feat-grid{grid-template-columns:repeat(2,1fr);grid-auto-flow:dense}
+  .feat-grid .tile.t-large{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column}
+  .feat-grid .tile.t-large .thumb{aspect-ratio:auto;flex:1;min-height:0}
+  .feat-grid .tile.t-wide{grid-column:span 2}
+}
+@media (min-width:900px){
+  .feat-grid{grid-template-columns:repeat(4,1fr);gap:20px}
+}
+
+.feat-cta{
+  grid-column:1/-1;display:flex;flex-direction:column;gap:16px;justify-content:center;
+  background:var(--ink);border-radius:var(--radius);padding:30px 26px;
+}
+.feat-cta h3{color:#fff;font-size:1.25rem;margin-bottom:6px}
+.feat-cta p{color:var(--muted-inv);margin:0;max-width:50ch;font-size:.92rem}
+@media (min-width:560px){
+  .feat-cta{flex-direction:row;align-items:center;justify-content:space-between;padding:34px 32px}
+  .feat-cta .btn{flex-shrink:0}
+}
+
+/* ---------- Industries band ---------- */
+.section-dark.ind-section{
+  position:relative;
+  background:
+    repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 80px),
+    var(--ink);
+}
+.ind-list{border-top:1px solid var(--line-dark)}
+.ind-row{
+  position:relative;overflow:hidden;
+  display:grid;grid-template-columns:1fr;gap:6px;padding:24px 4px 24px 16px;border-bottom:1px solid var(--line-dark);
+  border-left:2px solid transparent;
+  transition:background .25s var(--ease-out),padding-left .25s var(--ease-out),border-left-color .25s var(--ease-out);
+}
+.ind-row:hover{background:rgba(255,255,255,.03);padding-left:24px;border-left-color:var(--accent)}
+.ind-row .num{font-size:.92rem;color:var(--accent-tint);font-weight:800;letter-spacing:.06em;font-variant-numeric:tabular-nums;transition:color .25s var(--ease-out)}
+.ind-row:hover .num{color:#fff}
+.ind-row h3{color:#fff;font-size:1.15rem;transition:color .25s var(--ease-out)}
+.ind-row:hover h3{color:var(--accent-tint)}
+.ind-row p{color:var(--muted-inv);font-size:.9rem;line-height:1.6;margin:0}
+.ind-row .ghost{display:none}
+
+/* Individual scroll-linked reveal — see .reveal-row below — so rows surface
+   progressively as the visitor scrolls through the section, rather than as
+   one batched fade when the section first enters view. */
+.js-reveal .ind-row.reveal-row{opacity:0;transform:translateX(-18px);transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out)}
+.js-reveal .ind-row.reveal-row.is-visible{opacity:1;transform:none}
+
+@media (min-width:900px){
+  .ind-row{grid-template-columns:70px 1fr 1.4fr;align-items:baseline;gap:20px}
+  .ind-row .ghost{
+    display:block;position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    font-size:5rem;font-weight:800;color:#fff;opacity:.04;line-height:1;pointer-events:none;
+    font-variant-numeric:tabular-nums;transition:opacity .25s var(--ease-out);
+  }
+  .ind-row:hover .ghost{opacity:.07}
+}
+
+/* ---------- Capability strip ---------- */
+/* Connected production-flow: a static base line plus an accent line that
+   grows to the current stage as each capitem activates (see main.js),
+   reinforcing "one workshop, connected stages" rather than a plain list. */
+.capstrip-list{--numcol:56px;--cap-scale:0;position:relative;display:grid;gap:0;border-top:1px solid var(--line)}
+.capstrip-list::before{
+  content:"";position:absolute;left:calc(var(--numcol)/2 - .5px);top:14px;bottom:14px;width:1px;
+  background:var(--line);z-index:0;
+}
+.capstrip-list::after{
+  content:"";position:absolute;left:calc(var(--numcol)/2 - .5px);top:14px;bottom:14px;width:1px;
+  background:var(--accent);z-index:0;transform:scaleY(var(--cap-scale));transform-origin:top;
+  transition:transform .6s var(--ease-out);
+}
+.capitem{
+  position:relative;z-index:1;display:grid;grid-template-columns:var(--numcol) 1fr;gap:16px;
+  padding:26px 0;border-bottom:1px solid var(--line);align-items:start;
+}
+.capitem .num{
+  position:relative;width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--accent);border-radius:50%;background:var(--paper);
+  font-size:.82rem;font-weight:800;color:var(--accent);
+  transition:background .4s var(--ease-out),color .4s var(--ease-out);
+}
+.capitem.is-active .num{background:var(--accent);color:#fff}
+.capitem h3{margin-bottom:6px}
+.capitem p{margin:0;max-width:52ch}
+
+@media (min-width:900px){
+  .capstrip-list{--numcol:90px}
+  .capitem{grid-template-columns:var(--numcol) 1fr 2fr;align-items:center}
+}
+
+/* ---------- Private label ---------- */
+.pl-grid{display:grid;gap:32px}
+.pl-panel,.info-panel{background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.pl-panel .panel-label,.info-panel .panel-label{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
+.pl-panel ul,.info-panel ul{display:grid;gap:0}
+.pl-panel li,.info-panel li{
+  padding:14px 0 14px 24px;position:relative;color:var(--text);font-size:.95rem;
+  border-bottom:1px solid var(--line);
+}
+.pl-panel li:first-child,.info-panel li:first-child{border-top:1px solid var(--line)}
+.pl-panel li::before,.info-panel li::before{content:"";position:absolute;left:0;top:23px;width:10px;height:2px;background:var(--accent)}
+
+@media (min-width:900px){
+  .pl-grid{grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+}
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.82rem;color:var(--muted);margin-bottom:22px}
+.breadcrumb a{color:var(--muted);transition:color .18s var(--ease-out)}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb .sep{color:var(--line)}
+.breadcrumb .current{color:var(--text);font-weight:600}
+.section-dark .breadcrumb,.hero .breadcrumb{color:var(--muted-inv)}
+.section-dark .breadcrumb a,.hero .breadcrumb a{color:var(--muted-inv)}
+.section-dark .breadcrumb .current,.hero .breadcrumb .current{color:#fff}
+
+/* ---------- Product hero ---------- */
+.product-hero-grid{display:grid;gap:32px;align-items:start}
+.product-hero-solo{max-width:50rem}
+.product-media{aspect-ratio:4/3;border:1px solid var(--line-dark);border-radius:var(--radius);overflow:hidden;background:var(--soft)}
+.product-media img{width:100%;height:100%;object-fit:contain}
+.product-specline{
+  display:flex;flex-wrap:wrap;gap:0;margin-top:28px;padding-top:18px;border-top:1px solid var(--line-dark-soft);
+}
+.product-specline span{
+  padding:8px 20px 8px 0;font-size:.85rem;color:var(--muted-inv);border-right:1px solid var(--line-dark-soft);
+}
+.product-specline span:last-child{border-right:0}
+.product-specline strong{color:#fff;font-weight:700}
+
+@media (min-width:900px){
+  .product-hero-grid{grid-template-columns:1.1fr .9fr;gap:56px}
+}
+
+/* ---------- Product specification system ---------- */
+/* A compact manufacturer spec sheet, reused across every product page:
+   short fixed-width labels paired with values, separated by hairlines —
+   not a card grid. Mobile stacks label above value; desktop aligns them
+   side by side. Bullet style matches the accent-dash convention already
+   used in .pl-panel/.pathcard so it reads as one system, not a new one. */
+.spec-rows{border-top:1px solid var(--line)}
+.spec-row{display:grid;gap:6px;padding:18px 0;border-bottom:1px solid var(--line)}
+.spec-row .spec-label{
+  font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+}
+.spec-row .spec-value{color:var(--text);font-size:.95rem;line-height:1.55;max-width:60ch}
+.spec-row .spec-value ul{display:grid;gap:8px;margin-top:2px}
+.spec-row .spec-value li{position:relative;padding-left:16px;color:var(--text)}
+.spec-row .spec-value li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:2px;background:var(--accent)}
+
+@media (min-width:700px){
+  .spec-row{grid-template-columns:190px 1fr;gap:24px;align-items:baseline;padding:20px 0}
+}
+
+/* Shared link-list used for related-product lists on individual product pages */
+.link-list{display:grid;gap:0;border-top:1px solid var(--line)}
+.link-list li{border-bottom:1px solid var(--line)}
+.link-list a{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:13px 2px;font-weight:600;font-size:.92rem;color:var(--text);
+  transition:color .18s var(--ease-out),padding-left .18s var(--ease-out);
+}
+.link-list a::after{content:"→";color:var(--muted);font-weight:400;flex-shrink:0}
+.link-list a:hover{color:var(--accent);padding-left:8px}
+
+/* ---------- Products Hub — category product display ---------- */
+/* Image-backed product grid: same tile language as the homepage, sized for
+   category groupings of 1-3 items rather than a fixed column count. */
+/* One column on genuinely small phones (two columns there produces a
+   cramped ~130px tile); two columns once there's room; auto-fit once the
+   viewport can decide column count for itself. */
+.hub-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:480px){ .hub-grid{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:560px){ .hub-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))} }
+
+/* Typographic product card — used inside an image grid when no photography
+   exists for that item, so the grid stays intentional instead of leaving a
+   gap or using a placeholder image. */
+.prod-typo{
+  display:flex;flex-direction:column;justify-content:center;height:100%;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--soft);
+  padding:28px 24px;
+  transition:background .25s var(--ease-out),border-color .25s var(--ease-out),transform .25s var(--ease-out);
+}
+.prod-typo:hover{background:#fff;border-color:var(--ink);transform:translateY(-3px)}
+.prod-typo .index{font-size:.72rem;font-weight:800;letter-spacing:.1em;color:var(--muted);margin-bottom:14px;display:block}
+.prod-typo h3{font-size:1.15rem;margin-bottom:8px}
+.prod-typo p{font-size:.86rem;margin:0 0 18px}
+.prod-typo .go{font-size:.85rem;font-weight:700;color:var(--accent);display:inline-flex;align-items:center;gap:6px;transition:gap .2s var(--ease-out)}
+.prod-typo:hover .go{gap:10px}
+
+/* Spotlight — used for single-product categories (Aviation, Heritage) to
+   give them more visual weight than a one-item grid would. Text colors
+   adapt automatically for use on both light and dark section backgrounds. */
+.hub-spotlight{display:grid;gap:24px;align-items:center}
+.hub-spotlight .thumb{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:var(--soft)}
+.hub-spotlight .thumb img{width:100%;height:100%;object-fit:contain;transition:transform .6s var(--ease-out)}
+.hub-spotlight:hover .thumb img{transform:scale(1.04)}
+.hub-spotlight .copy h3{margin-bottom:10px}
+.hub-spotlight .copy p{margin-bottom:22px;max-width:48ch}
+.section-dark .hub-spotlight .thumb{border-color:var(--line-dark)}
+.section-dark .hub-spotlight .copy h3{color:#fff}
+.section-dark .hub-spotlight .copy p{color:var(--muted-inv)}
+
+@media (min-width:700px){ .hub-spotlight{grid-template-columns:1fr 1fr} }
+
+/* ---------- Product CTA band ---------- */
+.pcta{background:var(--ink);border-radius:var(--radius);padding:40px 32px}
+.pcta h2{color:#fff;margin-bottom:10px}
+.pcta p{color:var(--muted-inv);margin-bottom:24px;max-width:60ch}
+
+@media (min-width:900px){ .pcta{padding:52px} }
+
+/* ---------- Process timeline ---------- */
+/* The customer journey — deliberately distinct from the workshop's vertical
+   accent-colored capability flow above: horizontal on desktop, ink-colored
+   (not accent-colored) progress, so the two sequential sections read as
+   different things rather than the same component reused. */
+.steps{--numcol:56px;--proc-scale:0;position:relative;display:grid;gap:0}
+.steps::before{
+  content:"";position:absolute;left:calc(var(--numcol)/2 - .5px);top:12px;bottom:12px;width:1px;
+  background:var(--line);z-index:0;
+}
+.steps::after{
+  content:"";position:absolute;left:calc(var(--numcol)/2 - .5px);top:12px;bottom:12px;width:1px;
+  background:var(--ink);z-index:0;transform:scaleY(var(--proc-scale));transform-origin:top;
+  transition:transform .6s var(--ease-out);
+}
+.step{
+  position:relative;z-index:1;display:grid;grid-template-columns:var(--numcol) 1fr;gap:16px;
+  padding:26px 0;border-bottom:1px solid var(--line);
+}
+.step:first-child{border-top:1px solid var(--line)}
+.step .stepnum{
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);
+  font-size:.82rem;font-weight:800;color:var(--ink);
+  transition:background .4s var(--ease-out),color .4s var(--ease-out);
+}
+.step.is-active .stepnum{background:var(--ink);color:#fff}
+.step h3{margin-bottom:6px}
+.step p{margin:0;max-width:52ch}
+
+@media (min-width:900px){
+  .steps{--numcol:38px;grid-template-columns:repeat(4,1fr);gap:0;border-top:0}
+  .steps::before{left:20px;right:20px;top:19px;bottom:auto;height:1px;width:auto}
+  .steps::after{
+    left:20px;right:20px;top:19px;bottom:auto;height:1px;width:auto;
+    transform:scaleX(var(--proc-scale));transform-origin:left;
+  }
+  .step{grid-template-columns:1fr;border-top:0;border-bottom:0;border-right:1px solid var(--line);padding:0 28px 0 0}
+  .step:last-child{border-right:0;padding-right:0}
+  .step:first-child{border-top:0}
+  .step .stepnum{margin-bottom:18px}
+}
+
+/* ---------- Why Raqeeb ---------- */
+.why-grid{display:grid;gap:0;border-top:1px solid var(--line)}
+.why-item{
+  display:flex;gap:16px;padding:22px 4px;border-bottom:1px solid var(--line);align-items:flex-start;
+  transition:background .25s var(--ease-out),padding-left .25s var(--ease-out);
+}
+.why-item:hover{background:var(--soft);padding-left:14px}
+.why-item .mark{
+  flex-shrink:0;width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--accent);border-radius:50%;color:var(--accent);font-weight:800;font-size:.78rem;
+  transition:background .45s var(--ease-out),color .45s var(--ease-out),border-color .45s var(--ease-out);
+}
+.why-item p{margin:0;color:var(--text);line-height:1.6}
+.why-item strong{display:block;margin-bottom:5px;font-size:1.1rem;letter-spacing:-.005em}
+
+/* Final-state hierarchy: once each item has settled into place, its mark
+   fills solid a beat later — a quiet confirmation rather than a simultaneous
+   fade, giving the three advantages a deliberate, landed feel. */
+.stagger.is-visible > .why-item:nth-child(1) .mark{transition-delay:.32s}
+.stagger.is-visible > .why-item:nth-child(2) .mark{transition-delay:.39s}
+.stagger.is-visible > .why-item:nth-child(3) .mark{transition-delay:.46s}
+.why-grid.stagger.is-visible .mark{background:var(--accent);color:#fff}
+
+@media (min-width:900px){
+  .why-grid{grid-template-columns:repeat(3,1fr);border-top:0}
+  .why-item{flex-direction:column;gap:14px;border-top:1px solid var(--line);border-right:1px solid var(--line);padding:0 28px 28px 0;margin-top:28px}
+  .why-item:last-child{border-right:0}
+  .why-item:hover{padding-left:0;padding-right:28px}
+}
+
+/* ---------- FAQ ---------- */
+.faq{border-top:1px solid var(--line)}
+.faq .q{border-bottom:1px solid var(--line);padding:4px 4px;transition:background .2s var(--ease-out)}
+.faq .q:hover{background:var(--soft)}
+.faq summary{
+  cursor:pointer;font-weight:700;font-size:1.02rem;color:var(--ink);
+  display:flex;justify-content:space-between;align-items:center;gap:16px;list-style:none;
+  padding:18px 4px;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .icon{
+  position:relative;width:20px;height:20px;flex-shrink:0;
+}
+.faq summary .icon::before,.faq summary .icon::after{
+  content:"";position:absolute;top:50%;left:50%;background:var(--accent);
+  transition:transform .3s var(--ease-out);
+}
+.faq summary .icon::before{width:12px;height:2px;transform:translate(-50%,-50%)}
+.faq summary .icon::after{width:2px;height:12px;transform:translate(-50%,-50%)}
+.faq details[open] summary .icon::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0}
+.faq .q p{margin:0 4px 18px;max-width:64ch}
+
+@media (min-width:900px){
+  .faq{columns:2;column-gap:40px}
+  .faq .q{break-inside:avoid}
+}
+
+/* ---------- Contact ---------- */
+.contactgrid{display:grid;gap:24px}
+.card{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:#fff}
+.formgrid{display:grid;gap:16px}
+.formrow{display:grid;gap:16px}
+label{display:block;font-size:.84rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.hint{font-weight:400;color:var(--muted)}
+.input,.textarea{
+  width:100%;border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;
+  font-size:.95rem;color:var(--text);background:#fff;transition:border-color .2s var(--ease-out),box-shadow .2s var(--ease-out);
+}
+.input:focus,.textarea:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(10,18,32,.08)}
+.textarea{resize:vertical;min-height:120px}
+.form-primary-row{margin-top:6px}
+.form-primary-row .btn{width:100%}
+.alt-contact{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.alt-contact-label{font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:12px;display:block}
+.alt-contact-row{display:flex;gap:10px;flex-wrap:wrap}
+.alt-contact-row .btn{padding:11px 18px;font-size:.88rem}
+
+.contact-info{margin-bottom:20px}
+.contact-info .panel-label{font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:12px;display:block}
+.contact-info ul{display:grid;gap:8px}
+.contact-info li{font-size:.92rem;color:var(--text)}
+.contact-info a{transition:color .18s var(--ease-out)}
+.contact-info a:hover{color:var(--accent)}
+
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.map{width:100%;aspect-ratio:4/3;border:0;pointer-events:none;filter:grayscale(.15);border-radius:var(--radius-sm)}
+.map.is-active{pointer-events:auto}
+.maphint{font-size:.8rem;margin-top:10px}
+
+@media (min-width:640px){ .formrow{grid-template-columns:1fr 1fr} }
+@media (min-width:900px){ .contactgrid{grid-template-columns:1.1fr .9fr} }
+
+/* ---------- Footer ---------- */
+.foot{background:var(--ink);color:var(--muted-inv);padding:56px 0 24px}
+.footgrid{display:grid;gap:32px}
+.foot h3{color:#fff;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.foot p{color:var(--muted-inv);font-size:.92rem;margin:12px 0}
+.foot ul{display:grid;gap:9px}
+.foot a{color:var(--muted-inv);font-size:.92rem;transition:color .18s var(--ease-out)}
+.foot a:hover{color:#fff}
+.footsocial{display:flex;gap:12px;margin-top:16px}
+.footsocial a{
+  width:36px;height:36px;border:1px solid var(--line-dark);border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:var(--muted-inv);
+  transition:border-color .2s var(--ease-out),color .2s var(--ease-out),transform .2s var(--ease-out);
+}
+.footsocial a:hover{border-color:#fff;color:#fff;transform:translateY(-2px)}
+.copy{border-top:1px solid var(--line-dark);margin-top:40px;padding-top:20px;font-size:.8rem;color:var(--muted-inv)}
+
+@media (min-width:900px){
+  .footgrid{grid-template-columns:1.4fr 1fr 1fr 1fr}
+}
+
+/* ---------- WhatsApp FAB ---------- */
+/* Compact icon button rather than a full text pill — comfortably tappable
+   (48px+ touch target) without sitting over product imagery/text the way a
+   larger pill does on narrow screens. Accessible name comes from aria-label
+   on the element itself, so the icon-only content is fine for screen readers. */
+.whatsapp-fab{
+  position:fixed;right:16px;bottom:16px;z-index:150;background:var(--wa);color:#fff;
+  width:50px;height:50px;border-radius:50%;
+  box-shadow:0 8px 24px rgba(31,138,76,.35);display:flex;align-items:center;justify-content:center;
+  transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),opacity .2s var(--ease-out),visibility .2s;
+}
+.whatsapp-fab svg{width:24px;height:24px}
+.whatsapp-fab:hover{background:#186e3d;transform:translateY(-2px) scale(1.05);box-shadow:0 12px 28px rgba(31,138,76,.4)}
+/* Stepped back (and removed from tab order / AT exposure) while another
+   WhatsApp CTA is already on-screen, so the two don't visually compete —
+   see main.js. */
+.whatsapp-fab.is-muted{opacity:0;visibility:hidden}
+
+@media (min-width:640px){ .whatsapp-fab{width:54px;height:54px} }
+
+/* ---------- Scroll reveal system ---------- */
+/* Progressive enhancement: content is fully visible by default so the page
+   works with no JS (or if it fails/is blocked). The `js-reveal` class is
+   added to <html> by an inline script in <head> — early enough to avoid a
+   flash — and ONLY once it's present do .reveal/.stagger targets start
+   hidden, ready for main.js's IntersectionObserver to reveal them. */
+.js-reveal .reveal{
+  opacity:0;transform:translateY(22px);
+  transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out);
+}
+.js-reveal .reveal.is-visible{opacity:1;transform:none}
+
+.js-reveal .stagger > *{
+  opacity:0;transform:translateY(16px) scale(.98);
+  transition:opacity var(--dur-stagger) var(--ease-out),transform var(--dur-stagger) var(--ease-out);
+}
+.js-reveal .stagger.is-visible > *{opacity:1;transform:none}
+/* Capped at 4 steps: the first few items stagger meaningfully, then
+   everything after arrives together rather than making a visitor wait
+   through an escalating queue — most noticeable in product grids, where
+   nobody should wait to see the later tiles. */
+.stagger.is-visible > *:nth-child(1){transition-delay:.04s}
+.stagger.is-visible > *:nth-child(2){transition-delay:.11s}
+.stagger.is-visible > *:nth-child(3){transition-delay:.18s}
+.stagger.is-visible > *:nth-child(n+4){transition-delay:.24s}
+
+.stagger-tight.is-visible > *:nth-child(1){transition-delay:.02s}
+.stagger-tight.is-visible > *:nth-child(2){transition-delay:.055s}
+.stagger-tight.is-visible > *:nth-child(3){transition-delay:.09s}
+.stagger-tight.is-visible > *:nth-child(n+4){transition-delay:.125s}
+
+/* Slightly more pronounced entrance for the featured product grid — a
+   little extra rise + scale so tiles feel like they're settling into a
+   physical composition, not just fading. Delays reuse .stagger above. */
+.js-reveal .stagger-dimensional > *{transform:translateY(26px) scale(.95)}
+.js-reveal .stagger-dimensional.is-visible > *{transform:none}
+
+.hero-inner{opacity:0;transform:translateY(14px);animation:heroIn 1s var(--ease-out) .1s forwards}
+@keyframes heroIn{to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal,.stagger > *,.reveal-row{opacity:1!important;transform:none!important;transition:none!important}
+  .hero-inner{animation:none;opacity:1;transform:none}
+  .hero-graphic-spin{animation:none}
+  .hero-graphic-draw{animation:none;stroke-dashoffset:0}
+  .tile:hover,.pathcard:hover,.whatsapp-fab:hover{transform:none}
+  .tile:hover .thumb img{transform:none}
+  .btn:hover{transform:none}
+  .capstrip-list::after,.steps::after{transition:none}
+  .capitem .num,.step .stepnum,.why-item .mark{transition:none}
+  .prod-typo:hover,.hub-spotlight:hover .thumb img{transform:none}
+}
